@@ -1,0 +1,36 @@
+image: marciomansur/docker-serverless:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+    - node_modules/
+
+lint:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - npm run lint
+
+staging:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - serverless config credentials --provider aws --profile marciomansur --key $AWS_ACCESS_KEY --secret $AWS_SECRET_KEY
+    - serverless deploy -v
+  only:
+    - develop
+  environment: staging

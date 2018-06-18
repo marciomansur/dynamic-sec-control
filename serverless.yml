@@ -1,0 +1,33 @@
+service: dynamic-sec-control
+frameworkVersion: ">=1.0.0 <2.0.0"
+
+# Provider information
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: us-east-1
+  profile: marciomansur
+  memorySize: 256
+  iamRoleStatements:
+    - Sid: "allowDescribeAndDelete"
+      Effect: "Allow"
+      Action:
+        - "ec2:Describe*"
+        - "ec2:TerminateInstances"
+        - "ec2:DeleteVolumes"
+      Resource: "*"
+
+# Function config
+functions:
+  monitor:
+    handler: handler.monitor
+    events:
+      - cloudwatchEvent:
+          event:
+            source:
+              - "aws.ec2"
+            detail-type:
+              - "EC2 Instance State-change Notification"
+            detail:
+              state:
+                - running

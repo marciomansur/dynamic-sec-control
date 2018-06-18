@@ -1,0 +1,18 @@
+{
+  "name": "dynamic-sec-control",
+  "version": "1.0.0",
+  "description": "A dynamic security service written using AWS lambda to control machines provisioning based on security groups rules",
+  "main": "handler.js",
+  "scripts": {
+    "lint": "node node_modules/.bin/eslint *.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "js-yaml": "^3.12.0"
+  }
+}
